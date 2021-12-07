@@ -1,0 +1,101 @@
+﻿R2016b
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+y = ammod(x,Fc,Fs)
+y = ammod(x,Fc,Fs,ini_phase)
+y = ammod(x,Fc,Fs,ini_phase,carramp)
+-------------------------------------------------------------------------------------
+y = fmmod(x,Fc,Fs,freqdev)
+y = fmmod(x,Fc,Fs,freqdev,ini_phase)
+-------------------------------------------------------------------------------------
+y = pmmod(x,Fc,Fs,phasedev)
+y = pmmod(x,Fc,Fs,phasedev,ini_phase)
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+
+
+
+R2013
+-------------------------------------------------------------------------------------
+%% am modulation code
+clc; clear all; close all;
+f=1;        %Input signal frequency سیگنال ورودی 
+Fc=50;      %Carrier frequency  فرکانس حامل
+Fs=200;     %Sampling frequency فرکانس نمونه برداری ( باید بسیار بیشتر از فرکانس حامل باشد)
+t=0:0.005:2;
+x=sin(2*pi*f*t);
+Y=modulate(x,Fc,Fs,'am');
+t2=linspace(0,2,length(Y));
+subplot(2,1,1)
+title('input signal')
+plot(t,x,'g');
+subplot(2,1,2)
+title('modulated signal')
+plot(t2,Y);
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+[cc lang=”Matlab”]clc;
+clear all;
+close all;
+fm=input(‘Message Frequency=’);
+fc=input(‘Carrier Frequency=’);
+mi=input(‘Modulation Index=’);
+t=0:0.0001:0.1;
+m=sin(2*pi*fm*t);
+subplot(3,1,1);
+plot(t,m);
+xlabel(‘Time’);
+ylabel(‘Amplitude’);
+title(‘Message Signal’);
+grid on;
+
+c=sin(2*pi*fc*t);
+subplot(3,1,2);
+plot(t,c);
+xlabel(‘Time’);
+ylabel(‘Amplitude’);
+title(‘Carrier Signal’);
+grid on;
+
+y=sin(2*pi*fc*t+(mi.*sin(2*pi*fm*t)));%Frequency changing w.r.t Message
+subplot(3,1,3);
+plot(t,y);
+xlabel(‘Time’);
+ylabel(‘Amplitude’);
+title(‘FM Signal’);
+grid on;
+[/cc]
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+[cc lang=”Matlab”]clc;
+clear all;
+close all;
+t=0:0.001:1;
+set(0,‘defaultlinelinewidth’,2);
+A=5;%Amplitude of signal
+fm=input(‘Message frequency=’);%Accepting input value
+fc=input(‘Carrier frequency=’);%Accepting input value (f2>f1)
+mi=input(‘Modulation Index=’);%Modulation Index
+Sm=A*sin(2*pi*fm*t);%Message Signal
+subplot(3,1,1);%Plotting frame divided in to 3 rows and this fig appear at 1st
+plot(t,Sm);
+xlabel(‘Time’);
+ylabel(‘Amplitude’);
+title(‘Message Signal’);
+grid on;
+Sc=A*sin(2*pi*fc*t);%Carrier Signal
+subplot(3,1,2);
+plot(t,Sc);
+xlabel(‘Time’);
+ylabel(‘Amplitude’);
+title(‘Carrier Signal’);
+grid on;
+Sfm=(A+mi*Sm).*sin(2*pi*fc*t);%AM Signal, Amplitude of Carrier changes to (A+Message)
+subplot(3,1,3);
+plot(t,Sfm);
+xlabel(‘Time’);
+ylabel(‘Amplitude’);
+title(‘AM Signal’);
+grid on;[/cc]
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
